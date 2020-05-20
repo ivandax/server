@@ -3,6 +3,8 @@ const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const dishRouter = require('./routes/dishRouter');
+
 const hostname = 'localhost';
 const port = 3000;
 
@@ -10,33 +12,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
-//all specifies something we want the app to do to all different methods, regardless of methods
-app.all('/dishes', (req,res,next)=>{
-    res.statusCode = 200;
-    res.setHeader('Content-Type','text/plain');
-    next(); //next allows us to move along to other posible requests
-});
-
-//a get is associated with reading from the database
-app.get('/dishes', (req, res, next)=>{
-    res.end("We are sending dishes, all of them!");
-});
-
-//a post is associated with adding a new item (create) on the database
-app.post('/dishes',(req,res,next)=>{
-    res.end(`Will add the dish ${req.body.name}`)
-})
-
-//a put is associated with updating a single item, so calling it on /dishes makes no sense.
-app.put('/dishes',(req,res,next)=>{
-    res.statusCode = 403;
-    res.end("Put operation not supported")
-})
-
-//dangerous operation
-app.delete('/dishes',(req,res,next)=>{
-    res.end("Deleting all dishes!")
-})
+app.use('/dishes', dishRouter);
 
 //NOW; FOR SINGLE DISH REQUESTS:
 
