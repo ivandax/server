@@ -19,7 +19,7 @@ app.all('/dishes', (req,res,next)=>{
 
 //a get is associated with reading from the database
 app.get('/dishes', (req, res, next)=>{
-    res.end("We are sending files!");
+    res.end("We are sending dishes, all of them!");
 });
 
 //a post is associated with adding a new item (create) on the database
