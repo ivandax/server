@@ -26,4 +26,22 @@ delete((req,res,next)=>{ //dangerous op
     res.end("Deleting all dishes!")
 });
 
+//NOW; FOR SINGLE DISH REQUESTS:
+
+dishRouter.route('/:dishId').
+get((req, res, next)=>{
+    res.end("We are sending dish: "+req.params.dishId);
+}).
+post((req,res,next)=>{
+    res.statusCode = 403;
+    res.end("Post operation on single item not supported - "+req.params.dishId)
+}).
+put((req,res,next)=>{
+    res.write("Updating dish "+req.params.dishId)
+    res.end("Will update the dish - "+req.body.name+" with details: "+req.body.description) //we can read the body as json since we are using bodyParser
+}).
+delete((req,res,next)=>{
+    res.end("Deleting single dish - "+req.params.dishId);
+})
+
 module.exports = dishRouter;

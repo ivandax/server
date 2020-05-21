@@ -14,31 +14,6 @@ app.use(bodyParser.json());
 
 app.use('/dishes', dishRouter);
 
-//NOW; FOR SINGLE DISH REQUESTS:
-
-
-//a get is associated with reading from the database, we can read a single item
-app.get('/dishes/:dishId', (req, res, next)=>{
-    res.end("We are sending dish: "+req.params.dishId);
-});
-
-//a post is associated with adding a new item (create) on the database, but we cannot create a specific item with post
-app.post('/dishes/:dishId',(req,res,next)=>{
-    res.statusCode = 403;
-    res.end("Post operation on single item not supported - "+req.params.dishId)
-})
-
-//a put is associated with updating a single item, so calling it on /dishes makes no sense.
-app.put('/dishes/:dishId',(req,res,next)=>{
-    res.write("Updating dish "+req.params.dishId)
-    res.end("Will update the dish - "+req.body.name+" with details: "+req.body.description) //we can read the body as json since we are using bodyParser
-})
-
-//dangerous operation
-app.delete('/dishes/:dishId',(req,res,next)=>{
-    res.end("Deleting single dish - "+req.params.dishId);
-})
-
 app.use(express.static(__dirname+'/public'));
 
 app.use( (req, res, next) => {
